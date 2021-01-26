@@ -5,6 +5,8 @@ import pandas as pd
 import numpy as np
 
 def get_wb_wrk(book_name):
+    app=xw.App(visible=True,add_book=False)
+    wb=app.books.open(book_name)
     wb=xw.books[book_name]
     wrk=wb.sheets['Sheet1']
     return wb,wrk
