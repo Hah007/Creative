@@ -5,6 +5,9 @@ import pandas as pd
 import numpy as np
 
 def get_wb_wrk(book_name):
+    app=xw.App(visible=True,add_book=False)
+    wb=app.books.open(book_name)
+    wb=xw.books[book_name]
     wb=xw.books[book_name]
     wrk=wb.sheets['Sheet1']
     return wb,wrk
@@ -28,7 +31,8 @@ top3_color=15773696
 below_color=255
 cols=11
 
-wb,wrk=get_wb_wrk('成绩单.xlsx')
+filename='成绩单.xlsx'
+wb,wrk=get_wb_wrk(filename)
 df=get_df(wrk)
 
 # 排名与平均分
@@ -39,7 +43,9 @@ top3_df=df.query('排名<=3')
 below_avg=df.query('总分<班级均分')
 # 设置颜色
 set_color(wrk.range('A2'),top3_df,cols,top3_color)
-# set_color(wrk.range('A2'),below_avg,cols,below_color)
+set_color(wrk.range('A2'),below_avg,cols,below_color)
+wb.save()
+wb.close()
 
 
 
